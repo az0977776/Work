@@ -133,3 +133,37 @@ Data Types and Variables
 	./a.out
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+9/17/15
+SOTD: Superstitious - Stevie Wonder
+
+Aim: A vast array of possibilities.
+
+Do Now: How do you declare/use arrays in java?
+String[] args
+
+./a.out is required to force run the a.out file because linux does not allow random scripts to run
+
+runtime errors
+bust error
+segmentation error: null pointer, array index, access nonexistent file, etc
+
+c does not provide any functions
+to use the printf() function, you must use
+#include <stdio.h>
+at the top of the file
+
+#include <stdio.h>
+in and out functions
+
+#include <stdlib.h>
+standard functions
+
+#include "mylib.h"
+for custom libraries
+
+printf( "bob = %f\n", bob);
+%f is placeholder for bob, the f is for float
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
