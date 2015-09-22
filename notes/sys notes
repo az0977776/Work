@@ -183,4 +183,33 @@ pointer		%p
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-as
+9/22/15
+
+SOTD: Hunger Strike - Temple of the Dog
+
+Aim: What's the point of it all?
+
+Memory Management
+       Memory allocation either happens at compile time or at run time (dynamic).
+       *java's new keyword creates dynamic memory (heap memory - objects)
+       *compile time memory refers to java's stack memory (functions, variables, etc)
+
+       Compiler Allocated Memory
+       		Packaged with the binary of the program
+
+		There is no standard default value. The memory you get might not be cleared. You should initialize variables.
+
+		Variables and arrays are allocated here
+			  ex) float a	 int b[5]
+
+	Arrays
+		Are not dynamic
+		Must have a fixed size
+		There is no length function
+		There is no boundary checking
+		*using a[-1] will refer to the memory at the location right before the start of the array
+
+	segmentation fault can result from going to memory that you do not have access to
+		
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
