@@ -1,3 +1,16 @@
 9/21/15
 git checkout -> return the file to the last submit
 __name__ shows modulo name when imported
+
+9/22/15
+source activate to activate the enviroment
+
+pip install flask
+pip freeze -> shows python libraries
+
+from flask inport Flask
+only imports Flask
+ex) from random import randrange
+
+127.0.0.1 only allows local machine
+
