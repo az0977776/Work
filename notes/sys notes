@@ -213,3 +213,24 @@ Memory Management
 		
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+9/25/15
+
+SOTD: Here Comes The HotStepper - Ini Kamoze
+
+Aim: Ok, now we're really going to get to the point.
+
+Pointers - Now the fun really starts
+	 Variables designed to store memory addresses (think references in java)
+
+	 32 bit system -> 4 bytes -> integer -> ~4x10^9, limited to 4gb ram
+	 64 bit system -> 8 bytes -> long -> can have a bigger ram
+
+   	 & is used to get the address of a variable
+
+	 * is used to declare a variable as a pointer type
+	      ex) int *p, double *q, char *r, ...
+	      	  int *pfred = &fred; will hold the value of the pointer value of fred
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

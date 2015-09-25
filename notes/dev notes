@@ -2,6 +2,8 @@
 git checkout -> return the file to the last submit
 __name__ shows modulo name when imported
 
+
+
 9/22/15
 source activate to activate the enviroment
 
@@ -14,3 +16,19 @@ ex) from random import randrange
 
 127.0.0.1 only allows local machine
 
+
+
+9/25/15
+.gitignore
+when you check git status, files in gitignore will not show up
+
+{{<variable name>}} in html template
+return render_template("<page>", <variablename> = <value>) in the python file
+
+d = {}
+d['one'] = 'hello'
+d['two'] = 12312
+d[3] = 'abcdefg'
+
+d2 = {'last':'T', 'first':'Mr.', 'title':'Fool Pitier'}
+d.keys returns [3,'two','one']
