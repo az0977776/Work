@@ -234,3 +234,61 @@ Pointers - Now the fun really starts
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+9/28/15
+
+//SOTD: Here Comes the Hotstepper - Ini Kamoze
+SOTD: Lump - The Presidents of the United States of America
+
+Aim: Ok, now we're really going to get to the point.
+
+Do Now:
+   1) Declare int, double and char variables.
+   2) Declare int, double and char pointers. 
+   3) Initialize each pointer to the address of the corresponding variable.
+   4) Print out the pointer's value for each (as an unsigned long).
+   5) Add 1 to each pointer.
+   6) Print out the pointers again.
+   What happened?
+
+   char pointer adds 1
+   int pointer adds 4
+   long pointer adds 8
+   void pointer adds 1
+
+   Pointers - The fun really starts
+   	    Variables designed to store memory addresses (think about references in java)
+
+	    & is used to get the address of the variable
+
+	    * is used to declare a variable as a pointer type
+	      ex. int *p, double *q, char *r, ...
+
+	    * is also used as the de-reference operator
+	      It accesses the value at the memory location stored in a pointer
+
+	    All pointer varialbe types are the same size
+
+	    Pointer Arithmetic
+	    	    int *p = &i;
+		    char *c = &i
+
+		    p++; // will add 4 to p
+		    c++; // will add 1 to c
+
+		    Array variavles are immutable pointers
+
+	    Pointers can be assigned to array variables
+	    	     int ray[5];
+		     int *rp = ray;
+
+		     ray[3] <==> ?
+		     	    *(rp + 3)
+			    
+	       a[i] notation is shorthand for *(a + i)
+
+	       a[i] <==> *(a + i)
+	       i[a] <==> *(i + a)
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
