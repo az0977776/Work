@@ -292,3 +292,161 @@ Do Now:
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+9/29/15
+
+SOTD: In The Meantime - Spacehog
+Aim: Time to stop stringing you along.
+
+fray
+[2.3, 2, 8.17, .21, 5]
+824  828  832
+floats have 4 bytes
+
+float fray[5];
+float *fp = fray[0]; will give the pointer the value 2.3
+
+float *fp = fray; is correct because the array variable is immutable and is the address of the array
+printing fp will return 824 (the memory address)
+
+*fp will return 2.3   dereference
+
+address of the pointer is different from the address of the array
+
+fp + 2 -> 832
+*fp + 2 = 4.3
+*(fp + 2) = 8.17
+
+fp[2] <==> *(fp + 2) <==> *(2 + fp) <==> 2[fp]
+
+you cannot modify the value of an array pointer (in this case, fray)
+
+C strings (ctrings)
+  Strings are character arrays that end with a null character (either '' or 0 or '/0')
+  The terminating null character is a convention, string functions will not work correctly without it.
+
+  The following are valid ways to declare strings:
+
+      char s[256];
+      	   Normal array declaration, allocates 256 bytes, nothing is set automatically.
+      char s[256] = "Imagine";
+      	   Allocates 256 bytes, puts "Imagine" in the first 7 bytes AND adds a null at the 8th byte
+      char s[] = "Tuesday";
+      	   Allocates 8 bytes, puts "Tuesday" in the first 7 bytes AND adds a null at the 8th byte
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+9/30/15
+
+SOTD: One Headlight - The Wallflowers
+
+Aim: How to write functioning code
+
+Do Now: Write a c program that does the following
+   1) Create a String and set it to some value
+   2) Write code to find the length of the string and then print it. (Do not write a function for this)
+
+   char *s = "Mankind";
+   	Allocate 8 bytes, puts "Mankind" in the first 7 bytes AND adds a null at the 8th byte. s is a pointer variable instead of an array.
+
+   You can only assign strings with = at declaration.
+       char s[] = "zero"; //works
+       s = "seven"; // does not work
+
+   char *word = "cat";
+   char *up = "dog";
+
+   if you use
+   up = word;
+   then up will point to the same address that word points to(cat). dog is left somewhere in memory
+
+   int size = 0;
+   char *p = s4;
+   while (*p++) {
+   	 size ++;
+	 }
+
+   You should declare functions at the top of the c file
+   int len( char *s);
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+10/1/15
+
+SOTD: Tom Sawyer - Rush
+
+Aim: How to write functioning code
+
+Functions: A brief interlude
+   A parameter is a copy of the variable passed into the function. The original variable is not touched.
+
+   function headers
+      <return type> <name> (<parameters>)
+
+   Can store functions in a header file (stringy.h)
+   #include "stringy.h"
+   in the c file
+
+   void foo (char *s, int i);
+
+   int x = 5;
+   char *w = "cool";
+   foo(w,x);
+
+   when i is changed, x does not change
+   *s = 'b' changes the values in the string
+   the original values of x and w do not change
+   all c functions are "pass by value"
+
+   Back to Ctrings
+      string.h
+         C library that includes useful string functions.
+
+	 All the functions assume that the parameter strings are always null-terminated.
+
+	 int strlen( char *s) {
+	    Returns the number of characters from the start of s up to the null character.
+
+	 int strcmp( char *s1, char *s2)
+	    compares two strings
+	    negative if s1 > s2
+	    positive if s1 < s2
+	    0 if the two strings are the same
+
+	 char * strcpy (char *dest, char *source)
+	    copies source to destination
+
+	 char * strcat (char *dest, char *source)
+	    appends all the characters up to and including the terminating null from source to dest
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+
+10/6/15
+
+SOTD: Fake Plastic Trees - Radiohead
+
+Aim: Make it so
+
+pointer to string does not work and declaring as an array works
+string literals are immutable
+
+char *s1 = "Hello";
+char *s2 = "Hello";
+char s3[] = "Hello";
+s1 and s2 refer to the same immutable string literal
+s3 refers to a different piece of memory that can be modified
+
+immutable strings are stored in a place where c has fast access to them
+&"Mankind" works and shows the address of the immutable string
+
+cannot have two main functions; will not compile
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

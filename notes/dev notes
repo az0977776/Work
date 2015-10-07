@@ -32,3 +32,54 @@ d[3] = 'abcdefg'
 
 d2 = {'last':'T', 'first':'Mr.', 'title':'Fool Pitier'}
 d.keys returns [3,'two','one']
+
+9/28/15
+static folder -> files that do not change
+
+9/29/15
+cookies sent as header back from server
+browser sends the cookies back to the server everytime you request something from the website
+
+10/1/15
+shelves are like dictionaries but they can store information in a .dat file
+shelves can be accessed by multiple processes at the same time.
+
+10/2/15
+student info
+transcript
+schedule
+attendance
+
+teacher info
+schedule
+roster
+
+10/5/15
+Relational Database
+
+Structured Query Language SQL
+
+Oracle
+Sybase
+IBM DBL
+
+10/6/15
+postgresql -> had transactions
+mysql -> no transactions
+sqlite
+
+sqlite 3
+.open doughnutstore.db
+.databases
+.tables
+CREATE TABLE doughnuts (name text, price real, qty integer);
+.schema doughnuts
+INSERT INTO doughnuts VALUES ("jelly",2.50,10);
+.dump
+DROP TABLE doughnuts;
+.read doughnuts.sql
+
+SELECT * FROM doughnuts;
+SELECT name,qty FROM doughnuts;
+SELECT * FROM doughnuts WHERE name = 'coconuts';
+SELECT * FROM doughnuts WHERE name like "c%";
