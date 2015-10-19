@@ -420,8 +420,7 @@ Functions: A brief interlude
 	 char * strcat (char *dest, char *source)
 	    appends all the characters up to and including the terminating null from source to dest
 
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 10/6/15
 
@@ -442,6 +441,199 @@ immutable strings are stored in a place where c has fast access to them
 &"Mankind" works and shows the address of the immutable string
 
 cannot have two main functions; will not compile
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+10/7/15
+
+SOTD: Fake Plastic Trees - Radiohead
+
+Aim: Make it so
+
+Seperate compilation
+	 You can compile multiple c files into a c program by including them all in one gcc command.
+	     gcc dwstring.c main.c
+	 
+	 You cannot have duplicate function or global variable names across these files. This includes the main() function
+
+	 gcc -c
+	     Will compile a c file into a .o file, it is not a fully functional program, but it is compiled code. Do this to compile a .c file that does not contain a main() function. <.o> files only have the compiled code
+	 
+	 gcc -c dwstring.c
+	 gcc main.c dwstring.o
+ 	 combines the two files
+	 
+	 Make 
+	      Create compiling instructions and setup dependencies
+	      Standard name for the file is makefile
+
+	      syntax:
+		<TARGET>: <DEPENDENCIES>
+		TAB<RULES>
+
+	a.out: dwstring.o main.c
+	   gcc dwstring.o main.c
+
+	dwstring.o: dwstring.c dwstring.h
+	   gcc -c dwstring.c
+
+	main.o: main.c dwstring.h
+	   gcc -c main.c	   
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+10/8/15
+
+SOTD: Breaking The Girl - Red Hot Chili Peppers
+
+Aim: If you can't (al)locate your memory then... I forget
+
+A target in a make file can have any name
+
+makefile -> checks if files are updated, compares times of files
+
+clean:
+	rm *.o
+	rm *~
+
+make run -> runs the file after the file is compiled
+
+Dynamic memory allocation
+   malloc(int x)
+      Allocates x bytes of memory (from the heap)
+
+      Returns the address at the beginning of the allocation
+		   
+      Returns a void *, always typecast to the correct pointer type.
+		   
+      int *p;
+      p = (int *)malloc(20);
+      P = (int *)malloc(5 * sizeof(int));
+
+   calloc(int n, int x)
+      Allocates n * x bytes of memory
+
+      Ensures that each bit is set to 0
+      
+      Works like malloc in all other ways
+
+      int *p;
+      p = (int *)calloc(5, sizeof(int));
+
+   realloc(void *p, int x)
+      Changes the amount of memory allocated to a given block.
+
+      p must be a pointer to the beginning of an allocated block of memory, but it does not have to be the original pointer.
+
+      If x is smaller than the original size of the allocation, the extra bytes will be released.
+
+      int *p;
+      p = (int *)malloc(20);
+      p = (int *)realloc(p, 40);
+      
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+10/9/15
+
+SOTD: Papa's Got a Brand New Bag - James Brown
+
+Aim: Always structure your code well.
+
+Dynamic Memory Allocation
+   Normal memory allocation happens on the stack.
+
+   Stack memory get released as functions pop off.
+
+   Dynamic memory is located on the heap, it persists even after the function that created it pops off the stack.
+
+   You must manually release dynamically allocated memory from the heap.
+
+   free
+      Releases dynamically allocated memory.
+
+      Takes one parameter, a pointer to the beginning of a dynamically allocated block of memory.
+
+      Every call to malloc/calloc should have a corresponding call to free.
+
+      int *p;
+      p = (int *)malloc(20);
+      free(p);
+
+   Typedef
+      Provide a new name for a existing data type.
+      Can be put into the .h header file
+      typedef <original type> <new name>;
+      
+      typedef float bubbles;
+      typedef char * String;
+
+   Struct
+      A collection of values in a single data type.
+
+      struct { int a; char x; } s;
+      struct { int a; char x; } t;
+
+      t.a = 97;
+      t.x = '@';
+
+      // struct foo { int a; char c; };
+      typedef struct { int a; char c; } foo;
+      foo *t;
+      t = (foo *)malloc(sizef)
+
+      (*t).a;
+      t->c = '@';
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+10/13/15
+
+SOTD: Low Rider - War
+
+Aim: Zelda's in trouble, get Link!
+
+Do Now: What's wrong with this function?
+(Assume node has been declared correctly)
+
+node* insert_front( node* n, int i) {
+      node new;
+      new.i = i;
+      new.next = n;
+      return &new;
+}
+
+FROM HOMEWORK:
+
+typedef struct n {
+   int i;
+   struct n* next;
+} node;
+because struct n is in the struct n, you typedef on the same line
+
+void print_list( node* );
+do not need variable names for the parameters in the header file
+
+SNAKE CASE
+named with lowercase seperated by underscores
+
+stack memory is freed after function completes
+heap memory stays
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+10/15/15
+
+#define FOO 27
+before compiling, replaces all FOO in file with 27
+
+#ifndef FOO
+#endif
+if FOO not defined, then run everything in between #ifndef and #endif
+
+#ifndef LINK_LIST_H
+#define LINK_LIST_H
+
+#endif
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

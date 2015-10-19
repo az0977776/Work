@@ -83,3 +83,63 @@ SELECT * FROM doughnuts;
 SELECT name,qty FROM doughnuts;
 SELECT * FROM doughnuts WHERE name = 'coconuts';
 SELECT * FROM doughnuts WHERE name like "c%";
+
+10/7/15
+
+select people.name from people, doughnuts;
+matches every person to every doughnut
+
+<and> keyword
+
+databases in sql usually use btree
+wide trees instead of tall trees
+
+10/8/15
+
+comma seperated values
+
+placeholders
+
+import csv
+
+c = conn.cursor()
+q = "<sql command>"
+c.execute(q)
+
+conn.commit()
+saves the changes in the file
+
+make string commands in python for sql run, use execi
+
+tuple is immutable list
+
+
+
+10/19/15
+from flask import g
+
+in "base.html":
+{% block head %}
+this is my head
+{% endblock head %}
+
+in other .html files:
+{% extends "base.html" %}
+
+can replace parts of base:
+{% block head %}
+this is a new head
+{% endblock head %}
+
+grabs in another file:
+{% include "includedstuff.html" %}
+
+from flask import Markup
+l = """
+  <html code>
+"""
+l = Markup(l)
+
+jinja:
+{{list|safe}}
+filters as safe
