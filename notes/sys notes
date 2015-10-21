@@ -637,6 +637,117 @@ if FOO not defined, then run everything in between #ifndef and #endif
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+10/20/15
+
+SOTD: Wheels - Cake
+
+Aim: File this under useful information.
+
+Do Now: What are the different kinds of files permissions?
+
+read
+write
+execute
+
+who has this permission?
+
+rand()
+will return the same numbers
+
+srand(<seed>)
+returns random numbers based on the seed
+
+sranddev()
+seeds random number generator with a random number, truly "random"
+
+File Permission
+   3 kinds of permissions
+      read, write, execute
+      binary switch
+      1	  0   0  is 4; read-only
+      1   0   1  is 5; read and execute
+      1   1   1  is 7; read, write and execute
+   Permissions can be represented as 3-digit binary #'s, or 1-digit octal #'s
+
+   There are 3 permission "areas"
+      user, group, others
+      no overlap between the three groups
+
+   each area can have its own permissions:
+
+   644 => user:read + write, group: read, other: read
+   6 = read and write
+   4 = read
+
+   chmod 600 foo
+   change foo to user:read and write only
+   user can always change the permission of the file
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+10/21/15
+
+Note: Don't compile .h files!
+
+SOTD: Everything - MrNorth
+
+Aim: Opening up a whole new world of possibilities.
+
+chown
+to change the owner of the file
+
+chgrp
+to change the group of the file
+
+File Table
+   A list of all files used by a program while it is running.
+   Contains basic information like the file's location and size.
+   The file table has a limited size, which is a power of 2 and is commonly 256.
+   getdtablesize() will return the size of the file table.
+   Each file is a given an integer index, starting at 0, this is referred to as the file descriptor.
+
+   There are 3 files that are always open in the table:
+   0 or STDIN_FILENO: stdin
+   1 or STDOUT_FILENO: stdout
+   2 or STDERR_FILENO: stderr
+
+open - <fcntl.h>
+   Add a file to the file table and returns its file descriptor
+   fd1 = open( "foo", 1 );
+   fd1 returns 3 because there are already 3 files in the file table
+   the descriptor to non-existant files is -1
+
+   If open fails, -1 is returned, extra error information cna be found in errno
+   #include <errno.h>
+      errno is an int variable that can be found in <errno.h>, using strerror (in string.h) on errno will return a string description of the error.
+      strerror(errno);
+
+open( <PATH>, <FLAGS>, <MODE> )
+
+mode
+   Only used when creating a file. Set the new file's permission using a 3-digit octal #.
+   Octal #'s have a leading 0
+      0644, 0777
+
+flags
+   Determine what you plan to do with the file.
+   Use the following constants:
+      O_RDONLY
+      O_WRONLY
+      O_RDWR
+      O_APPEND
+      O_TRUNC
+      O_CREAT
+      O_EXCL: when combined with O_CREAT, will return an error if the file exists
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

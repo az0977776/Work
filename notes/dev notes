@@ -143,3 +143,14 @@ l = Markup(l)
 jinja:
 {{list|safe}}
 filters as safe
+
+10/20/15
+
+NoSQL -> any non-SQL database
+
+Mongodb
+stored on server
+collections instead of tables
+documents instead of records
+
+mongo api
