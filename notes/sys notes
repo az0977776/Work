@@ -719,7 +719,7 @@ open - <fcntl.h>
 
    If open fails, -1 is returned, extra error information cna be found in errno
    #include <errno.h>
-      errno is an int variable that can be found in <errno.h>, using strerror (in string.h) on errno will return a string description of the error.
+      errno is an int variable that can be found in <errno.h>, using strerror in <string.h> on errno will return a string description of the error.
       strerror(errno);
 
 open( <PATH>, <FLAGS>, <MODE> )
@@ -740,13 +740,135 @@ flags
       O_CREAT
       O_EXCL: when combined with O_CREAT, will return an error if the file exists
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+10/22/15
+
+SOTD: Fly Me To The Moon - Frank Sinatra
+
+Aim: Read your writes!
+
+open
+   flags
+      Determine what you plan to do with the file.
+
+      Use the following constants:
+      	  O_RDONLY
+	  O_WRONLY
+	  O_RDWR
+	  O_APPEND
+	  O_TRUNC
+	  O_CREAT
+	  O_EXCL: when combined with O_CREAT, will return an error if the file exists
+
+   bitwise operators
+      &: bitwise and
+      |: bitwise or
+      ~: bitwise not
+      ^: bitwise xor
+
+   char c = 13; // 00001101
+   char x = ~c; // 11110010
+
+   flags
+      Each flag is a number, to combine flags we use bitwise or
+
+      O_WRONLY = 1        = 000000001
+      O_APPEND = 8        = 000001000
+      O_WRONLY | O_APPEND = 000001001
+      use the operator on each column
+
+   close - <unistd.h>
+      Remove a file from the file table.
+
+      Returns 0 if successful. Returns -1 and sets errno if unsuccessful.
+
+      close(<FILE DESCRIPTOR>);
+      
+read - <unistd.h>
+   Read in data from a file
+
+   read( <FILE DESCRIPTOR>, <BUFFER>, <AMOUNT> );
+   read( fd, buff, n)
+
+   Reads n bytes from the fd's file and put that data into buff
+   Returns the number of bytes actually read. Returns -1 and sets errno if unsuccessful.
+
+   BUFFER must be a pointer. If you do not put a pointer, the BUFFER cannot be modified; functions have pass-by values.
+
+write - <unistd.h>
+   write( <FILE DESCRIPTOR >, <BUFFER>, <AMOUT> );   
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+10/26/15
+
+SOTD: Crazy - Gnarls Barkley
+
+Aim: Seek and ye shall find
+
+umask(0111);
+shuts down execute permission for all files
+
+umask(0000);
+all permissions are available
+
+umask(0022);
+group and others cannot write
+
+lseek - <unistd.h>
+   Set the current position in a open file
+   lseek( <FILE DESCRIPTOR>, <OFFSET>, <WHENCE> )
+   whence is where you are measuring from
+
+   SEEK_SET
+      offset is evaluated from the beginning of the file
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+10/28/15
+
+SOTD: For What It's Worth - Buffalo Springfield
+
+Aim: I need information, stat!
+
+Do Now:
+   1) Make a directory
+   2) Put a few files in that directory and maybe even a directory or two
+
+metadata is data that describes other data
+a file has 40 bytes, the information that it has 40 bytes is not in the actual file
+
+ls is written in c
+
+stat - <sys/stat.h>
+   Get information about a file (metadata)
+
+   stat(<PATH>, <STAT BUFFER>)
+   
+      struct stat sb;
+      stat("foo", %sb);
+      
+   <STAT BUFFER>
+      Must be a pointer to a struct stat
+      All the file information gets put into the stat buffer. 
+      Some of the fields in struct stat:
+         st_size
+	    file size in bytes
+         st_uid, st_gid
+	    user id, group id
+         st_mode
+            file permissions
+         st_atime, st_mtime
+  	    last access, last modification
+	    
+	    These are stuct time_t variables. We can use functions in time.h to make sense of them.
+	    
+	    ctime(<struct time_t *>) 
+	       returns the time as a string
+
+	    time(<struct time_t *>)
+ 	       sets the parameter to the current time
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
