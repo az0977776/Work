@@ -872,6 +872,253 @@ stat - <sys/stat.h>
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+10/29/15
+
+SOTD: In the Waiting Line - Zero 7
+
+Aim: Where do compsci priests live? - In directory!
+
+ctime( <TIME> )
+   TIME is the type time_t*
+   returns the time as a string
+
+time( <TIME> )
+   TIME is type time_t*
+   sets the parameter to the current time
+
+   time_t t;
+   time(&t);
+   printf("%lu\n", t);
+   printf("%s\n", t);
+
+Directories
+   A *nix directory is a file containing the names of the files within the directory along with the basic information like file type.
+
+   Moving files into/out of a directory means changing the directory file, not actually moving any data.
+
+opendir - <dirent.h>
+   Open a directory file
+   This will not change the cwd, it only allows your program to read the contents of the directory file
+
+opendir(<PATH>);
+   Returns a pointer to a directory stream (DIR *)
+
+closedir - <dirent.h>
+   Closes the directory stream and frees the pointer associated with it.
+   closedir(<DIRECTORY STREAM>)
+
+readdir - <dirent.h>
+   readdir(<DIRECTORY STREAM>)
+   Returns a pointer to the next entry in a directory stream, or NULL if all entries have already been returned.
+
+   struct dirent - <sys/types.h>
+   Directory struct that contains the information stored in a directory file.
+
+   Some of the data members
+      d_name: Name of a file 
+      d_type: File type as an int
+
+   example:
+      DIR * d;
+      d = opendir("somedir");
+
+      struct dirent *entry;
+      entry = readdir(d);
+
+rewinddir = <dirent.h>
+   Resets the directory stream to the beginning
+
+   rewinddir(<DIRECTORY STREAM>)
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+10/30/15
+
+SOTD: War Pigs - Black Sabbath
+
+Aim: Puttin' in the puts.
+
+Command Line Arguments:
+   int main( int argc, char *argv[])
+
+   program name is considered the first command line argument
+
+   argc
+      number of command line arguments
+   argv
+      array of command line arguments
+
+scanf - <stdio.h>
+   scanf(<FORMAT STRING>, <VAR1>, <VAR2>, ...)
+   Reads in data from stdin using the format string to determine types.
+   Puts the data in each variable.
+   Variables must be pointers.
+
+   int x; float f; double d;
+   scanf("%d %f %lf", &x, &f, &d);
+
+fgets - <stdio.h>
+   Reads in from a file stream and stores is in a string
+   fgets(<DESTINATION>, <BYTES>, <FILE POINTER>);
+   retains the newline and puts a terminating null
+   saves the last byte for the terminating null
+   
+   fgets(s, n, f);
+      Reads at most n-1 characters from the file stream f and stores it in s
+   File pointer
+      FILE * type, more complex than a file descriptor
+      stdin is a FILE * variable
+   Stops at newline, end of file, or the byte limit
+
+   Keeps the newline character as part of the string, appends NULL after.
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+11/4/15
+
+SOTD: Shine - Collection Soul
+
+Aim: Are your processes running? - Then you should go out and catch them!
+
+Do Now: Run the command ps in a terminal. What do you see?
+
+Processes
+   Every running program is a process. A process can create subprocesses, but these are no different from regular processes.
+   A processor can handle 1 process per cycle (per core). "Multitasking" appears to happen because the processor switches between all the active processes quickly.
+   
+   pid
+      Every process has an unique identifier called the pid.
+      pid 1 is the init process
+      Each entry in the /proc directory is a current pid
+
+   getpid() - <unistd.h>
+      returns the current process's pid
+      
+   getppid() - <unistd.h>
+      returns the current process's parent pid
+
+   fork() - <unistd.h>
+      Creates a seperate process based on the current one, the new process is called the child, the original is the parent.
+      The child process is a duplicate of the parent process. All parts of the parent process are copied, including stack and heap memory, and the file table.
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+11/5/15
+
+SOTD: Us and Them - Pink Floyd
+
+Aim: Go fork off (another process)
+
+fork() - <unistd.h>
+   Creates a seperate process based on the current one, the new process is called the child, the original is the parent.
+   The child process is a duplicate of the parent process. All parts of the parent process are copied, including stack and heap memory, and the file table.
+      Quick note on threads: A thread is a seperate executable entity similar to a child process, except a thread is not a standalone process. It does not have its own        memory space, instead it shares its parent's memory.
+   Returns 0 to the child and the child's pid to the parent or -1(errno).
+   If a parent process ends before the child, the child's new parent pid is 1.
+
+wait() - <unistd.h>
+   Stops a parent process from running until any child has provided status information to the parent (usually the child has exited).
+   Returns the pid of the child that exited, or -1(errno)
+   
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+11/9/15
+
+SOTD: Losing My Religion - REM
+
+Aim: Time to bring out the executioner.
+
+exit( <int> ) 
+exits the process and returns the integer in the parameter
+
+waitpid( <pid>, &status, 0)
+will wait until the pid given finishes
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+11/10/15
+
+SOTD: Burden in my Hand - Soundgarden
+
+Aim: Invasion of the process snatchers.
+
+waitpid - <unistd.h>
+   Waits for a specific child
+   waitpid(pid, status, options)
+      pid
+         The pid of the specific child to look for. If -1, will wait for any child
+      	 waitpid(-1,status,0) works just like wait()
+      options
+         Can set other behavior for wait, if 0, will work normally
+
+The exec family - <unistd.h>
+   There are a number of c functions that can be used to run other programs from within our own programs.
+   Replaces the current process with the new program, any code after a call to an exec function will be ignored.
+   
+   execl
+      execl(<PATH>, <COMMAND>, <ARGS>, NULL)
+      
+      PATH
+         The path to the program (ex: "/bin/ls")
+      COMMAND
+         The name of the program (ex: :"ls")
+      ARGS
+         Each command line arguemnt you wish to give to the program. (ex: "-a", "-l")
+	 The last argument must be NULL
+      example
+         execl("/bin/ls", "ls", "-a", "-l", NULL);
+      
+   execlp
+      execlp(<PATH>, <COMMAND>, <ARGS>, NULL>
+         Works like execl, except it uses the PATH enviroment variable for commands, so you can use "ls" as the PATH instead of "/bin/ls"
+      example
+	 execlp("ls", "ls", "-a", "-l", NULL);
+
+   execvp
+      execvp(<PATH>, <ARGUMENT ARRAY>)
+      ARGUMENT ARRAY
+         Array of strings, with element 0 as the name of the program to be executed and the last element must be NULL.
+      Like execlp, the PATH argument will take the PATH enviroment variable into account.     
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+11/12/15
+
+SOTD: Sell Out - Reel Big Fish
+
+Aim: Let's take this to delimit!
+
+strsep - <string.h>
+   Used for parsing a string with a common delimiter
+   strsep( <SOURCE>, <DELIMITER> )
+   Locates the first occurrence of the delimiter in a string and replaces that character with NULL.
+   Returns the beginning of the original string and sets the source string to the string starting at 1 index past the location of the new NULL.
+   Since the source varialbe's value is changed, it must be a pointer to a string.
+   char line[100] = "wow-this-is-cool"
+   char *s1 = line;
+
+   strsep( &s1, "-")
+      replaces the - after the wow with NULL
+      returns "wow"
+      sets s1 to "this-is-cool"
+      when &s1 is NULL, then you have reached the end of the string
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
