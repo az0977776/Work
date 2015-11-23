@@ -1105,6 +1105,47 @@ strsep - <string.h>
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+11/16/15
+
+SOTD: Gimmie Shelter - The Rolling Stone
+
+Aim: Redirection, how does it ... SQUIRREL
+
+File Redirection
+   Changing the usual input/output behavior of a program
+   Command line redirection
+      >
+         Redirects stdout to a file
+	 Overwrites the content of the file
+	 <COMMAND> <FILE>
+	 ls > file_list
+      >> 
+         Redirects stdout to a file
+	 Appends instead of overwrites
+
+      2>
+         Redirects stderr to a file
+	 Overwrites the file (2>> appends)
+      
+      &>
+         Redirects stdout and stderr
+
+      <
+         Redirects stdin from a file
+
+      | (pipe)
+         Redirects stdout from one command to stdin of the next
+	 ls | wc
+	    word counts ls output
+
+   Redirection in c programs
+      dup2 - <unistd.h>
+         Redirects one file descriptor to another
+	 dup2(fd1,fd2)
+	    Redirects fd2 to fd1
+	    puts fd1 into fd2   
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

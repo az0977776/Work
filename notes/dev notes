@@ -163,4 +163,15 @@ Todo - github issues
 dir structure
 file name
 
+11/16/15
+get query - who what when
+search for pages with those words
+extract text
+find all the names
+simple stats
 
+11/17/15
+import re
+
+expression = "[0-9]{3}-[0-9]{3}-[0-9]{4}"
+return re.findall(expression.s)
