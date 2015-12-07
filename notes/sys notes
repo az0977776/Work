@@ -1230,11 +1230,71 @@ Shared Memory - <sys/shm.h>, <sys/ipc.h>, <sys/types.h>
    shmget
       Create or access a shared memory segment.
       Returns a shared memory descriptor (similar idea to a file descriptor), or -1 if it fails.
-      
+      shmget( key, size, flags )
+         key
+	    Unique integer identifier for the shared memory segment.
+	 size
+	    How much memory to request
+	 flags
+	    Includes permission for the segment.
+	    Combine using bitwise or
+	    IPC_CREAT: create the segment; if the segment is new, will set value to all 0s
+	    IPC_EXCL: Fail if the segment already exists and IPC_CREAT is on
+   shmat 
+      Attach a shared memory segment to a variable.
+      Returns a pointer to the segment, or -1(errno).
+      shmat( descriptor, address, flags )
+         descriptor
+	    The return value of shmget
+	 address
+	    If 0, the OS will provide the appropriate address
+	 flags
+	    Usually 0, there is one useful flag
+	    SHM_RDONLY: makes the memory read only      
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+12/4/15
+
+SOTD: Plush - Stone Temple Pilots
+
+Aim: Memes
+
+Shared Memory!
+   ftok
+      Generate a key for IPC functions
+      ftok(path,x);
+         path
+ 	    A path to some file, the file must be accessible by the program running.
+	 x
+	    An int
+      The generated key will be the same if path and x are the same for seperate calls
+   sd = shmget( ftok("dir/file", 12), 1024, IPC_CREAT | 0664);
+  
+   shmdt
+      Detach a variable from a shared memory segment.
+      Returns 0 if successful or -1 upon failure.
+      shmdt(pointer);
+         pointer
+	    The address used to access the segment
+   
+   shmctl
+      Perform operations on the shared memory segment.
+      Each shared memory segment has metadata that can be stored in a struct (struct shmid_ds)
+      Some of that data stored: last access, size, pid of the creator, pid of the last modification
+      shmctl( descriptor, command, buffer );
+         descriptor 
+	    Return value of shmget
+	 commands
+	    IPC_STAT
+	       populate the buffer (struct shmid_ds) with information
+	    IPC_SET
+	       set some of the information for the segment to the info in the buffer
+	    IPC_RMID
+	       remove a shared memory segment
+      e = shmctl( sd, IPC_RMID, NULL );
+   
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
