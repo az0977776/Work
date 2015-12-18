@@ -1297,7 +1297,222 @@ Shared Memory!
    
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+12/7/15
+
+SOTD: The General - Dispatch
+
+Aim: How do we flag down a resource?
+
+Semaphores (created by Edsgar Dijkstra)
+   IPC construct used to control access to a shared resource (like a file or shared memory).
+   Essentially, a semaphore is a counter that represents how many processes can access a resource at any given time.
+      If a semaphore has a value of 3, then it can have 3 active "users".
+      If a semaphore has a value of 0, then it is unavailable.
+   Most semaphore operations are "atomic", meaning that they will not be split up into multiple processor instructions.
+   Semaphore operations:
+      Create a semaphore
+      Set an initial value
+      Up(S) / V(S)
+         Release the semaphore to signal you are done with it's associated resource.
+	 pseudocode:
+	    S++
+      Down(S)/ P(S)
+         Attempt to take the semaphore.
+	 If the semaphore is 0, wait for it to be available
+	 pseudocode:
+	    while(S == 0) 
+	       block
+ 	    S--
+   Removing a semaphore
+      
+Semaphore code
+   semget - <sys/types.h>, <sys/ipc.h>, <sys/sem.h>
+      Create/Get access to a semaphore.
+      This is not the same as Up(S), the semaphore is not modified by semget.
+      Returns a semaphore descriptor or -1 (errno)
+      semget( <KEY>, <AMOUNT>, <FLAGS> )
+         KEY
+	    Unique semaphore identifier (use ftok)
+	 AMOUNT
+	    Semaphores are actually stored as sets with possibly many semaphores stored together. This parameter sets the number of semaphores to create/get.
+	 FLAGS
+	    Includes permissions for the semaphore.
+	    Combine with bitwise or
+	    IPC_CREAT: create the semaphore, will set values to 0
+	    IPC_EXCL: Fail if the semaphore alread exists and IPC_CREAT is on.
+	 example
+	    int semd;
+	    semd = segment( ftok("file/dir", 2), 1, 0664 | IPC_CREAT );
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+12/8/15
+
+SOTD: Time is Running Out - Muse
+Aim: What's a semaphore? - To control resources!
+
+Semaphore code
+   semctl - <sys/types.h> <sys/ipc.h> <sys/sem.h>
+      Control the semaphore, including:
+         Set the semaphore value
+	 Remove the semaphore
+	 Get the current value
+	 Get information about the semaphore
+      semctl(<DESCRIPTOR>, <INDEX>, <OPERATION>, <DATA>)
+         DESCRIPTOR
+	    The return value of semget
+	 INDEX
+	    The index of the semaphore you want to control in the semaphore set identified by the descriptor
+	    For a single semaphore set, 0.
+	 OPERATION
+	    One of the following constants (there are others as well)
+	    IPC_RMID: remove the semaphore (does not need DATA)
+	    SETVAL: set the value (requires DATA)
+	    SETALL: set the value of every semaphore in the set (requires DATA)
+	    GETVAL: Return the value
+	    IPC_STAT: Populate the buffer with information about the semaphore (requires DATA)
+         DATA
+	    Variable for setting/storing information about the semaphore (data type: union semun)
+	    You have to declare this union in your main c file on linux machines.
+	    union semun {
+	       int val;
+	       struct semid_ds *buf;
+	       unsigned short *array;
+	       struct seminfo *__buf;
+	    };
+	    val: used to set initial value
+	    buf: buffer for IPC_STAT
+	    Union is only as large as the largest data structure inside   
+	    
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+12/8/15
+
+SOTD: Bold As Love - Jimi Hendrix
+
+Aim: Turn down or up?
+
+Semaphore code
+   semop
+      Perform semaphore operations (like Up/Down)
+
+      All operations performed via semop are atomic!
+      semop( <DESCRIPTOR>, <OPERATION>, <AMOUNT> )
+         AMOUNT
+	    The amount of semaphores you want to operate on in the semaphore set.
+	    For a single semaphore set, 1.
+	 OPERATION
+	    A pointer to a struct sembuf value
+	    struct sembuf {
+	       short sem_op;
+	       short sem_num;
+	       short sem_flg;
+	    };
+	    sem_num
+	       The index of the semaphore you want to work on.
+	    sem_op
+	       -1: Down(S)
+	       1: Up(S)
+	       Any -/+ number will work, you will be requesting/releasing that value from the semaphore.
+	       0: Block until the semaphore reaches 0	    
+	    sem_flg
+	       Provide further options
+	       SEM_UNDO:
+	          Allow the OS to undo the given operations. Useful in the event that a program exits before it could release a semaphore.
+	       IPC_NOWAIT:
+ 	          Instead of waiting for the semaphore to be available, return an error.
+	     	  
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+12/14/15
+
+SOTD: Shinbone Alley/Hard to Exist - Spin Doctors
+
+Aim: Ceci n'est pas une pipe
+
+Pipe
+   A conduit between 2 seperate processes.
+   Pipes have 2 ends, a read end and a write end.
+   Pipes are unidirectional (a single pipe must be either read or write only in a process).
+   Pipes act just like files.
+   You can transfer any data you like through a pipe using read/write.
+   Unamed pipes have no external identification (like a descriptor or name).
+   
+   pipe - <unistd.h>
+      Create an unnamed pipe.
+      Returns 0 if the pipe was created, -1 if not.
+      Opens both ends of the pipe as files.
+      pipe (int descriptors[2])
+         descriptors
+	    Array that will contain the descriptors for each end of the pipe.
+	    fd[0] generally read and fd[1] write
+
+Named Pipes
+   Also known as FIFOs.
+   Same as unnamed pipes except FIFOS have a name that can be used to identify them via different programs.
+   Keep in mind that like unnamed pipes, FIFOs are unidirectional.
+   
+   mkfifo - <sys/types.h> <sys/stat.h>
+      Shell command to make a FIFO
+      $ mkfifo <pipe name>
+        
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+12/15/15
+
+SOTD: Tropicalia - Beck
+
+Aim: A pipe by any other name...
+
+   mkfifo
+      returns 0 on success and -1 on failure
+      once created, the FIFO acts like a regula file, and we can use open, read, write and close on it.
+      mkfifo( <name>, <permissions> )
+      FIFOs will block on open until both ends of the pipe have a connection.
+      needs read and write end
+   remove(<filename>);
+      remove("mario");
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+12/16/15
+
+SOTD: Cantaloop - US3 (Cantaloupe)
+
+Aim: Always remember to tip your servers
+
+Server/Client Program Paradigms
+   Handshake
+      A procedure to ensure that a connection has been established
+      Both ends of the connection must verify that they can send and receive data to and from each other
+      Basic Handshake procedure:
+         1) Server creates a named piped (Well Known Pipe)
+	 2) Server waits for a connection
+         3) Client creates a "private" named pipe 
+	 4) Client connects to server through WKP and sends the name of the private pipe
+	 5) Client connects to the private pipe, waiting for the server
+	 6) Server receives client's messages and removes the WKP
+	 7) Server connects to client pipe, sending an initial acknowledgement message.
+	 8) Client receives the server's message, removes its private pipe.
+	 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+12/17/15
+
+SOTD: The Joker - Steve Miller Band
+
+Aim: You just got served!
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+12/18/15
+
+SOTD: The last 8 songs on Abbey Road - The Beatles
+
+Aim: Sometimes you have to ask your server for another fork.
+
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
