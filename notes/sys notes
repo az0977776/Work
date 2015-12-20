@@ -1512,7 +1512,23 @@ SOTD: The last 8 songs on Abbey Road - The Beatles
 
 Aim: Sometimes you have to ask your server for another fork.
 
+Basic Server
+   1) Basic Handshake
+   2) Server get data from client, "processes" it and sends back a response.
+   3) Once the client exits, the server recreates a new WKP, removes the old client connection and the steps retart.
 
+Forking Server
+   Main server forks off dedicated subserver for each client connection.
+   Allows for multiple simultaneous clients.
+   Handshake procedures is modified on the server:
+      1 - 6 are the same
+      7) Server forks off a subserver
+      8) *Subserver* connects to client pipe, sending an initial acknowledgement message.
+   After the Handshake:
+      Main server creates a new WKP and waits for a new client.
+   Central Dispatch Server
+      Main server handles all incoming connections.
+      Subservers are forked off to handle outgoing connections.
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
