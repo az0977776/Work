@@ -1532,6 +1532,103 @@ Forking Server
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+1/4/16
+
+SOTD: Paranoid Android - Radiohead
+
+Aim: Cisco in an hour™
+
+Do Now: What needs to happen in order for 2 computers to communicate with each other?
+
+OSI 7-Layer Model
+   Used to help conceptualize the different parts of network connections.
+   The top layer is the most concrete, with each subsequent layer becoming more abstract (relying less on the physical connections and more on code).
+   The Layers:
+      1. Physical
+      2. Data Link
+      3. Network
+      4. Transport
+      5. Session
+      6. Presentation
+      7. Application
+   If you are working on a particular layer, then you should not have to think too much about the other layers.
+   Physical Layer
+      How computers are physically connected
+      Things like electron running across wires, radio signals pulsing through the air...
+      A brief history of wired connections
+         Thicknet - A single Coaxial cable runs throughout the network, "vampire taps" go into the cable and leeches the data out
+	 Thinnet - A single Coaxial cable runs throughout the network, 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+1/5/16
+
+SOTD: Virtual Insanity - Jamiroquai
+
+Aim: Cisco in an hour™ Part II: Electric Boogaloo
+
+Physical Layer
+   A brief history of wired connections
+      Thinnet
+         A single Coaxial cable runs throughout the network, T-Junctions used to splice connections
+      In Thicknet and Thinnet, all data is sent to all computers.
+      Each computer added increases the power drain on the entire system, degrading service.
+      Token Ring
+         Each computer is connected in a ring to each other.
+	 Only one computer has command of the network resources at a time. This is called "having the token".
+	 The network sends a "token" throughout the ring, which contains the identity of the computer with the token. All other computers must wair to use the network.
+   	 No possibility of collisions.
+      Ethernet
+         Multiple computers connect to a single hub or switch.
+	 Hub
+	    Broadcasts the data to all the computers
+	 Switch
+	    Sends data to a specific computer (Needs to look at Data Link Layer)
+	 The more computers you add to an ethernet network the greater than chance of collision.
+	  
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+1/6/16
+
+SOTD: Break on Through - The Doors
+
+Aim: Cisco in an hour™ Part III: in 3-D!
+
+Data Link Layer (2)
+   Point-to-point transmission between devices on the same (local) network
+   Each device is given an unique 6-byte MAC (Media Access Control) address, this is set on each network card when they are made.
+   Data is packed into frames
+      Ethernet Frame:
+         <prefix><dest><source><...><data><checksum>
+	    8B    6B     6B     6B  46-1500B  4B
+	 prefix: 10101010 x7 + 10101011
+	 destination/source: MAC addresses
+	 ...: Information about frame type
+	 data: padded with 0 if under 46B, cannot go over 1500B
+	 checksum: to ensure data integrity
+   MTU
+      Maximum Transmission Unit
+      1500 Bytes for ethernet
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+1/7/16
+
+SOTD: Bohemian Rhapsody - Queen
+
+Aim: Cisco in an hour™ Part IV: A New Hope
+
+Network Layer(3)
+   Transmission of data between two seperate networks
+   Major features of this layer are addressing, routing and packet forwarding.
+   Is not concerned with whether or not data was sent successfully (connectionless).
+   IP (internet protocol) addresses
+      IPv4: 4 byte address
+         [0-255] . [0-255] . [0-255] . [0-255]
+      
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
