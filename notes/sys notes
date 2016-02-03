@@ -1629,6 +1629,104 @@ Network Layer(3)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+1/8/16
+
+SOTD: Mr.Jones - Counting Crows
+
+Aim: Cisco in an hour™ V for Vendetta
+
+      Routing is made easier by having IP addresses distributed in blocks.
+      Gateway: a device that connects a network to internet
+      ARP
+         Address Resolution Protocol
+	 Translates IP <--> MAC
+	 Handled by each individual network seperately
+	 192.168.1.1 loopback address
+    
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+1/11/16
+
+SOTD: Space Oddity - David Bowie
+
+Aim: Cisco in an hour™ VI: The Undiscovered Country
+
+Network Layer (3)
+   Data is broken into packets
+      <header info> <packet length> <fragment info>
+           2B         2B                4B
+      <time-to-live> <protocol> <header checksum>
+           1B         1B                2B
+      <source> <destination> <...> <data>
+        4B            4B      4B   20 - 65,535B
+      header info: packet type(IPv4/6), header length...
+      fragment info: Full payloads may be broken up, this will have a total # of fragments as well as which fragments the current packet contains
+      time-to-live: Maximum # of hops before the packet dies
+      protocol: TCP/UDP/...
+      ...:optional information depending on the type of packet
+      MTU or maximum transfer unit is 65,535B
+      IPv6: Now 20 years old! Designed to overcome the limitations of IPv4
+         Addresses space goes from 2^32 -> 2^128
+	 Addresses are written as 8 groups of 4 hexadecimal digits
+	 87ab : 301b : b251 : ...
+	 All existing IPv4 addresses can be written like this:
+	 0000 : 0000 : 0000 : ffff: 149.89.150.100
+      MTU
+         ~4.3 billion (2^32)
+	 Also referred to as jumbograms
+
+Transport Layer (4)
+   Computer to computer connection over multiple networks
+   Unconcerned with the individual hops of layer 3 traffic
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+1/12/16
+
+SOTD: Another Day - Pomplamoose
+
+Aim: Cisco in an hour™ VII: Adrian's Revenge
+
+
+Transport Layer (4)
+   Computer to computer connection over multiple networks
+   Unconcerned with the individual hops of layer 3 traffic
+   Each IP address has multiple ports
+      65,535 ports
+      ports < 1024 are well known, reserved ports
+      Regulated by the Internet Assigned Numbers Authority (IANA)
+   TCP
+      Transmission Control Protocol
+      Reliable connection
+      Guarentees delivery of data
+      Data is considered a continuous stream that arrives in the order it is sent (which may not be true in the upper layers)
+      Connections are established using a 3-way handshake:
+         Server "binds" to a port and waits
+	 1. Client sends a SYN message to the server (synchronized)
+	 2. Server sends the client a SYN_ACK message 
+	 3. Client sends an ACK message to the server (acknowledge)
+	 Once this is done, the connection is established and data can flow freely between the two machines
+   UDP
+      User Datagram Protocol
+      Does not require an explicit connection
+      Data is sent as discrete datagrams with a set size (as opposed to a continuous stream)
+      Datagrams may be dropped, or received out of order
+      UDP connections are faster because they do not need to be reassembled at the other end
+      Assume that any kind of error checking is handled at levels 5-7
+      Media streaming and games are often UDP for faster connection, no problem if a few datagrams dropped
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+1/13/16
+
+SOTD: Everlong - Foo Fighters
+
+Aim: Socket to me!
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
