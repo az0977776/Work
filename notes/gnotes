@@ -1,0 +1,20 @@
+2/2/16
+
+Image File Formats
+   Compressed: smaller, less information
+      png, gif, jpg
+   Uncompressed: full map of pixel values
+      bmp, tiff, svg, raw
+   Lossy: loses some of the original information
+      jpg
+   Lossless: contains all the original information
+      bmp, tiff, png
+
+   Run-length Encoding
+   12B GGGGGYYYRRRR
+   6B  5G3Y4R
+
+   Raster: image is represented as a grid of pixels
+   Vector: image is represented as a list of drawing instructions, scale well
+
+   netpbm: raster, lossless, uncompressed
