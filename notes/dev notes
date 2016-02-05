@@ -176,6 +176,50 @@ import re
 expression = "[0-9]{3}-[0-9]{3}-[0-9]{4}"
 return re.findall(expression.s)
 
-2/2/16
+===============================================================================
 
-Aim: Canvasing the area.
+2/3/16
+
+Aim: Canvassing the area.
+
+HTML5!
+   Redesign of HTML with a focus on making the more "modern" features of web browsers easy to work with.
+   Design around javascript and a standardized DOM
+   Includes built-in support for audio and video playback
+   Includes an element that can be directly drawn on
+
+Document Model Object
+   Model that organizes the components of a web page as a tree
+   Provides an API to access the elements of a webpage via programming languages like javascript
+   
+Canvas
+   HTML5 element that provides a drawing area
+   Javascript functions can draw onto a canvas element.
+      You must declare what context you are drawing in. For example 2d drawing, 3d drawing, raw bitmap rendering...
+   Basic canvas operation:
+      HTML
+         <canvas height="500" width="500" id="slate">
+	 </canvas>
+      javascript
+         var c = document.getElementById("slate");
+	 var ctx = c.getContext("2d");
+	 ctx.fillStyle = "#ff0000";
+	 ctx.fillRect(50,50,100,200);
+
+2/4/16
+
+ctx.beginPath();
+ctx.arc(x,y,radius,starting angle,end angle); //circles clockwise
+ctx.fill();
+ctx.stroke();
+
+var clear = function(e) {
+    e.preventDefault();
+    ctx.clearRect(0,0,500,500);
+}
+
+var drawDot = function(e) {
+    e.preventDefault();
+    ctx.beginPath();
+    ctx.arc(e.offsetX, e.offsetY, 10, 0, 2 * Math.PI);
+}

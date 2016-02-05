@@ -1,4 +1,4 @@
-2/2/16
+2/3/16
 
 Image File Formats
    Compressed: smaller, less information
@@ -18,3 +18,13 @@ Image File Formats
    Vector: image is represented as a list of drawing instructions, scale well
 
    netpbm: raster, lossless, uncompressed
+
+2/4/16
+
+netpbm (.ppm file)
+   P3
+   XRES YRES
+   MAX_COLOR_VALUE
+   RGB RGB RGB ...
+
+All whitespace is equivalent
