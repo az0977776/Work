@@ -19,6 +19,8 @@ Image File Formats
 
    netpbm: raster, lossless, uncompressed
 
+------------------------------------------------------------------------------------------
+
 2/4/16
 
 netpbm (.ppm file)
@@ -28,3 +30,66 @@ netpbm (.ppm file)
    RGB RGB RGB ...
 
 All whitespace is equivalent
+
+------------------------------------------------------------------------------------------
+
+2/5/16
+
+Bresenham's Line Algorithm
+y = mx+b
+f(x,y) = Ax+By+C = 0 when (x,y) on the line
+first octant -> all lines have slopes between 0 and 1
+
+------------------------------------------------------------------------------------------
+
+2/9/16
+
+Bresenham's Line Algorithm
+A = Dy, B = -Dx, C = (Dx)b
+F(x,y) = Ax+By+C
+0<m<1
+
+starting at (x,y), the next point in octant 1 is either (x+1,y) or (x+1,y+1)
+mid point: (x+1,y+1/2)
+
+if f(x+1,y+1/2)
+= 0, then the midpoint is on the line and we can draw either pixel
+< 0, then the line is below the midpoint and we draw the lower pixel (x+1,y)
+> 0, then the line is above the midpoint and we draw the upper pixel (x+1,y+1)
+
+First draw algorithm
+(x0,y0) -> (x1,y1)
+x=x0, y=y0
+
+d = A + B/2
+while(x<=x1):
+   plot(x,y)
+   if (d > 0):
+      y += 1;
+      d += B;
+   x += 1;
+   d += A;
+
+initial value of d
+d = f(x0+1,y0+1/2)
+d = A(x0+1) + B(y0+1/2) + C
+d = Ax0 + A + By0 + B/2 + C
+d = (Ax0 + By0 + C) + A + B/2
+d = 0 + A + B/2
+
+if d<0:
+x->x+1, y->y
+f(x+1,y)
+d = A(x+1) + By + C
+d = (Ax + By + C) + A
+d = f(x,y) + A
+
+if d>0:
+x->x+1, y->y+1
+f(x+1,y+1)
+d = A(x+1) + B(y+1) + C
+d = (Ax + By + C) + A + B
+d = f(x,y) + A + B
+
+------------------------------------------------------------------------------------------
+
