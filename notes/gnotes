@@ -300,3 +300,170 @@ E3=R*S*T*E0
 
 =======================================================================================
 
+3/7/16
+
+Parametric Equations
+x = f(t)
+y = g(t)
+t: 0 -> 1
+
+(x0,y0)->(x1,y1)
+
+def xparam(t):
+    return t*XRES
+    
+def yparam(t):
+    return sin(2*PI*t)
+
+circle:
+while t < 1.001:
+x = rcos(2*pi*t)
+y = rsin(2*pi*t)
+t+=(1/numberofsides)
+adding floating point can mess up your counter
+
+=======================================================================================
+
+3/8/16
+
+Spline
+
+hermite curves:
+4 points:
+2 endpoints p0 p1
+2 rate of change at endpoints r0 r1
+
+f(t) = at^3+bt^2+ct+t
+points on the curve
+f'(t) = 3at^2 + 2bt + c
+
+when t = 0:
+f(0) = d p0
+f'(0) = c r0
+
+when t = 1:
+f(1) = a+b+c+d p1
+f'(1) = 3a+2b+c r1
+
+=======================================================================================
+
+3/9/16
+
+Hermite Curves:
+Inputs:
+p0 p1 endpoints
+r0 r1 rates of change
+
+f(t) = at^3 + bt^2 + ct + d
+
+G
+[d
+a+b+c+d
+c
+3a+2b+c]
+
+G
+[p0
+p1
+r0
+r1]
+
+H
+[[0 0 0 1]
+[1 1 1 1]
+[0 0 1 0]
+[3 2 1 0]]
+
+C
+[a
+b
+c
+d]
+
+H*C = G
+C = G * H^-1
+
+H^-1
+[[2 -2 1 1]
+[-3 3 -2 -1]
+[0 0 1 0]
+[1 0 0 0]]
+
+Bezier Curve
+Inputs:
+p0 p3 endpoints
+p1 p2 points that influence the curve
+
+
+p(t) = (1-t)p0 +t(p1)
+Linear Bezier Curve - 2 points
+
+Quadratic Bezier Curve - 3 points
+
+=======================================================================================
+
+3/10/16
+
+Bezier Curves
+
+Linear
+p(t) = (1-t)p0 + t(p1)
+
+Quadratic
+R(t) = (1-t)r0 + t(r1)
+r0(t) = (1-t)p0 + t(p1)
+r1(t) = (1-t)p1 + t(p2)
+
+R(t) = (1-t)[(1-t)p0 + t(p1)] + t[(1-t)p1 + t(p2)]
+R(t) = p0(1-t)^2 + t(1-t)p1 + t(1-t)p1 + p2t^2
+R(t) = p0(1-t)^2 + 2t(1-t)p1 + p2t^2
+
+Cubic
+Q(t) = (1-t)r0 + t(r1)
+= (1-t)[p0(1-t)^2 + 2t(1-t)p1 + p2t^2] + t[p1(1-t)^2 + 2t(1-t)p2 + p3t^2]
+= (1-t)^3(p0) + 2t(1-t)^2(p1)+t^2(1-t)(p2)+t(1-t)^3(p1)+2t^2(1-t)+t^3(p3)
+
+Q(t) = (1-t)^3(p0) + 3t(1-t)^2(p1) + 3t^2(1-t)(p2) + t^3(p3)
+
+=======================================================================================
+
+3/11/16
+
+R(t) = (-t^3 + 3t^2 - 3t + 1)(p0) + (3t^3 - 6t^2 + 3t)(p1) + (3t^2 -3t^3)(p2) + (t^3)(p3)
+distribute and reorganize by powers of t
+
+a = (-p0 + 3p1 - 3p2 + p3)
+b = (3p0 - 6p1 + 3p2)
+c = (-3p0 + 3p1)
+d = (p0)
+
+R(t) = a(t^3) + b(t^2) + c(t) + d
+
+[[-1 3 -3 1]
+[3 -6 3 0]
+[-3 3 0 0]
+[1 0 0 0]]
+*
+[p0
+p1
+p2
+p3]
+=
+[a
+b
+c
+d]
+=
+[[-p0 + 3p1 -3p2 + p3]
+[3p0 - 6p1 + 3p2]
+[-3p0 + 3p1]
+[p0]]
+
+add_circle(cx,cy,r,edges)
+add_Hcurve(x0,y0,x1,y1,rx0,ry0,rx1,ry1)
+add_Bcurve(x0,y0,x1,y1,x2,y2,x3,y3)
+
+at^3 + bt^2 + ct + d
+t(t(at+b)+c)+d
+
+no exponentiation
