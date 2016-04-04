@@ -467,3 +467,126 @@ at^3 + bt^2 + ct + d
 t(t(at+b)+c)+d
 
 no exponentiation
+
+=======================================================================================
+3/21/16
+
+3-D Shapes
+Box,Sphere,Torus,Bezier/Hermite Surfaces
+
+Box
+Input: width, height, depth, initial point
+x = width
+y = height
+z = depth
+initial point-> upper-left-front
+def drawBox(w,h,d,x,y,z):
+
+Sphere
+add_circle()
+make_rotX()
+x = rcostheta
+y = rsintheta cosphi
+z = rsintheta sinphi
+circle in theta
+rot in phi
+
+=======================================================================================
+3/22/16
+
+3-D Shapes
+
+Sphere
+Xrot
+[1 0 0 0
+0 cos -sin 0
+0 sin cos 0
+0 0 0 1]
+
+[r cos theta
+r sin theta
+0
+1]
+
+x = rcostheta
+y = rsintheta cosphi
+z = rsintheta sinphi
+
+theta: angle used to create the circle
+phi: angle of circle rotation
+
+full circle:
+theta:0->2pi
+phi:0->pi
+semicircle:
+theta:0->pi
+phi:0->2pi
+
+Psuedocode for Sphere points:
+for p: 0->1
+    for t:0->1
+    	x = rcos(pit)
+        y = rsin(pit) cos(2pip)
+        z = rsin(pit) sin(2pip)
+
+Torus
+translate, then rotate
+Xrot
+[1 0 0 0
+0 cos -sin 0
+0 sin cos 0
+0 0 0 1]
+
+[rcostheta
+rsintheta + R
+0]
+
+r: radius of the circle
+R: distance from center of torus to center of the circle
+
+x = rcostheta
+y = cosphi(rsintheta+R)
+z = sinphi(rsintheta+R)
+theta and phi both from 0 to 2pi
+
+offsets after all other transformations
+
+=======================================================================================
+3/29/16
+
+Wireframe/Polygon Meshes
+
+Wireframe
+   3d object is defined by the edges that connect the vertices/points
+   uses the same edge matrix concepts we have been working with
+
+Polygon
+   3d object is defined by the surfaces (typically triangles or quadrilaterals) that cover the object
+   change from edge matrix to polygon matrix
+   Allows us to draw solid objects and remove hidden
+   matrix 3 at a time
+
+Edge Matrix -> Polygon Matrix
+   plot -> plot
+   drawLine -> drawLine
+   drawLines -> drawPolygons*
+   addPoints -> addPoint
+   addEdge -> addPolygon*
+
+>add points counter-clockwise
+
+=======================================================================================
+3/30/16
+
+Polygon Meshes
+
+box: draw points counterclockwise with the surfaces facing you, two triangles per face
+sphere:
+each circle is a longitude line on the circle
+p00 p01 p02 p03 ... p09
+p10 p11 p12 p13 ... p19
+
+i, i+n+1, i+n
+i, i+1, i+n+1
+
+=======================================================================================
